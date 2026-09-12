@@ -61,7 +61,8 @@ ui-redesign-skills/
 ├── CONTRIBUTING.md
 ├── docs/
 │   ├── architecture.md
-│   └── references.md
+│   ├── references.md
+│   └── testing.md
 ├── examples/
 │   └── prompts.md
 └── skills/
@@ -107,6 +108,12 @@ Image 4 → redesign D
 ```
 
 Never one image containing A + B + C + D unless the user explicitly requests a comparison board.
+
+## Testing
+
+The repository includes a routing-focused test plan for the single-skill Astra architecture. It covers explicit invocation, implicit discovery, domain routing, multiple directions, component scope control, and a negative coding-trigger test.
+
+See [docs/testing.md](docs/testing.md).
 
 ## Design philosophy
 
