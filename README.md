@@ -4,21 +4,25 @@
 
 A composable set of Agent Skills for redesigning existing user interfaces from screenshots with GPT Image / ChatGPT Images.
 
-The repository is built around a simple rule:
-
 > **One output image = one complete redesign.**
 
-If you ask for eight redesigns, the intended result is **eight separate images**, never one contact sheet containing eight tiny concepts.
+If you ask for eight redesigns, the intended result is eight separate images — never one contact sheet containing eight tiny concepts.
 
-## Quick install
+## Recommended install
 
-Install the full collection with [skills.sh](https://skills.sh):
+Install the **complete collection** with skills.sh:
 
 ```bash
 npx skills add matteolaureti/ui-redesign-skills
 ```
 
-Or install only the skill you need:
+**This is the recommended setup for most users.** The collection is designed to work as a system: `ui-redesign-core` provides the common redesign foundation, while the more specific skills add domain-specific guidance for dashboards, landing pages, iOS apps, components, and multi-direction exploration.
+
+Once the collection is installed, the agent can use the appropriate skills for the task instead of requiring you to install modules one by one.
+
+### Advanced: install a single skill
+
+Only do this if you intentionally want a partial installation:
 
 ```bash
 npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill ui-redesign-core
@@ -29,11 +33,11 @@ npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill compo
 npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill design-direction-explorer
 ```
 
-See [INSTALL.md](INSTALL.md) for the recommended combinations.
+See [INSTALL.md](INSTALL.md) for recommended combinations and update instructions.
 
 ## Why this exists
 
-Image models are already good at generating polished UI concepts, but screenshot redesign often fails in predictable ways:
+Screenshot-based UI redesign often fails in predictable ways:
 
 - the result is only a recolor of the original;
 - multiple concepts are packed into one image;
@@ -45,7 +49,41 @@ Image models are already good at generating polished UI concepts, but screenshot
 
 These skills turn screenshot redesign into a repeatable workflow with explicit product-design reasoning and quality checks.
 
-## Structure
+## Skills
+
+| Skill | Purpose |
+|---|---|
+| `ui-redesign-core` | Foundation for screenshot analysis, hierarchy, layout, typography, surfaces, brand handling, accessibility and anti-AI-slop rules. |
+| `dashboard-redesign` | SaaS dashboards, admin panels, analytics interfaces and operational workspaces. |
+| `landing-page-redesign` | Product landing pages, SaaS marketing sites and conversion-focused web experiences. |
+| `ios-app-redesign` | Native-feeling iPhone and iPad redesigns with platform-aware navigation and layout. |
+| `component-redesign` | Redesigns one card, section, table, modal, FAQ, pricing block or localized UI component. |
+| `design-direction-explorer` | Produces several genuinely different redesign directions while keeping one concept per image. |
+
+## How the collection composes
+
+The full collection is the recommended installation. Conceptually, tasks usually combine the core skill with the relevant specialization:
+
+```text
+Dashboard
+ui-redesign-core + dashboard-redesign
+
+Landing page
+ui-redesign-core + landing-page-redesign
+
+iOS app
+ui-redesign-core + ios-app-redesign
+
+Single component
+ui-redesign-core + component-redesign
+
+Multiple dashboard directions
+ui-redesign-core + dashboard-redesign + design-direction-explorer
+```
+
+There is no invented dependency or `import` syntax between the skills. Each specialized skill carries the critical guardrails it needs to remain useful independently, while the collection is designed to give the agent the complete set of tools to choose from.
+
+## Repository structure
 
 ```text
 ui-redesign-skills/
@@ -73,110 +111,13 @@ ui-redesign-skills/
         └── SKILL.md
 ```
 
-## The skills
-
-### `ui-redesign-core`
-
-The foundation. Use it for almost any screenshot-based redesign.
-
-It defines:
-
-- screenshot analysis;
-- preservation of product meaning;
-- redesign intensity;
-- hierarchy, typography, surfaces and layout;
-- realistic UI rendering;
-- anti-AI-slop rules;
-- brand handling;
-- accessibility-aware visual decisions;
-- the mandatory one-image-one-redesign rule.
-
-### `dashboard-redesign`
-
-For SaaS dashboards, admin panels, operational tools and analytics interfaces.
-
-Adds guidance for:
-
-- information density;
-- KPI hierarchy;
-- tables and lists;
-- filters;
-- navigation;
-- status and anomalies;
-- activity feeds;
-- operational actions;
-- master-detail layouts;
-- avoiding “a grid of cards with charts” as the default answer.
-
-### `landing-page-redesign`
-
-For marketing websites and product landing pages.
-
-Adds guidance for:
-
-- narrative and conversion hierarchy;
-- hero sections;
-- product demonstrations;
-- social proof;
-- pricing;
-- trust;
-- section rhythm;
-- avoiding the standard AI SaaS-page sequence.
-
-### `ios-app-redesign`
-
-For iPhone and iPad UI redesign.
-
-Adds guidance for:
-
-- safe areas;
-- adaptive layout;
-- Dynamic Type;
-- navigation stacks;
-- toolbars;
-- tab bars;
-- sheets and modality;
-- native-feeling controls;
-- avoiding “desktop web UI squeezed into a phone”.
-
-### `component-redesign`
-
-For redesigning a single card, section, table, modal, FAQ, pricing block, navigation element or other isolated component.
-
-It deliberately prevents the model from needlessly redesigning the entire surrounding product.
-
-### `design-direction-explorer`
-
-A companion skill for generating several genuinely different redesign directions.
-
-It forces structural diversity across outputs while preserving:
-
-> **one concept per image**
-
-## Recommended composition
-
-There is no assumed technical `import` mechanism between skills. Each skill is usable on its own.
-
-For best results, combine the relevant skills conceptually:
-
-```text
-ui-redesign-core + dashboard-redesign
-ui-redesign-core + landing-page-redesign
-ui-redesign-core + ios-app-redesign
-ui-redesign-core + component-redesign
-
-ui-redesign-core + dashboard-redesign + design-direction-explorer
-```
-
-The domain skills repeat only the most important guardrails so they remain useful even when used independently.
-
 ## Example
 
 Input:
 
 > Redesign the attached dashboard. Keep the same product functionality, but rethink the visual hierarchy and layout. Generate 8 different directions.
 
-Recommended skills:
+The intended skill combination is:
 
 ```text
 ui-redesign-core
@@ -184,7 +125,7 @@ dashboard-redesign
 design-direction-explorer
 ```
 
-Expected behavior:
+Expected output behavior:
 
 ```text
 Image 1 → one complete redesign
@@ -204,33 +145,19 @@ One image → 8 miniature redesigns
 
 The skills are designed for reference-led image workflows: the attached UI screenshot acts as a functional and informational source, while the model is allowed to reinterpret the visual design according to the requested redesign intensity.
 
-They are intentionally model-light rather than being tightly coupled to one version. They can be used with current GPT Image / ChatGPT Images workflows and adapted as image-generation capabilities evolve.
+The repository is intentionally model-light rather than tightly coupled to one version, so the skills can evolve with image-generation capabilities.
 
-For high-fidelity editing, explicitly tell the model what must remain recognizable and what may change. For complete redesigns, preserve product meaning and important content while allowing the visual composition to be rebuilt.
+## Updating
 
-## Installation
-
-Use the skills.sh CLI:
-
-```bash
-npx skills add matteolaureti/ui-redesign-skills
-```
-
-The repository contains multiple valid skills, so you can install the collection or select a specific skill with `--skill`.
-
-To pull newer versions of installed skills:
+Pull newer versions of installed skills with:
 
 ```bash
 npx skills update
 ```
 
-Full installation details are in [INSTALL.md](INSTALL.md).
-
 ## Design philosophy
 
-These skills do not prescribe one aesthetic.
-
-They are intended to improve **product-design reasoning**, not turn every interface into the same fashionable style.
+These skills do not prescribe one aesthetic. They are intended to improve **product-design reasoning**, not turn every interface into the same fashionable style.
 
 The system prioritizes:
 
@@ -249,15 +176,7 @@ Color is not the first design decision.
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Useful additions could include skills for:
-
-- Android;
-- e-commerce;
-- data-heavy admin interfaces;
-- onboarding and forms;
-- settings and billing;
-- brand-led redesign;
-- accessibility-focused redesign.
+Useful additions could include skills for Android, e-commerce, data-heavy admin interfaces, onboarding and forms, settings and billing, brand-led redesign, and accessibility-focused redesign.
 
 ## References
 
