@@ -1,5 +1,7 @@
 # UI Redesign Skills for GPT Image
 
+[![skills.sh](https://skills.sh/b/matteolaureti/ui-redesign-skills)](https://skills.sh/matteolaureti/ui-redesign-skills)
+
 A composable set of Agent Skills for redesigning existing user interfaces from screenshots with GPT Image / ChatGPT Images.
 
 The repository is built around a simple rule:
@@ -7,6 +9,27 @@ The repository is built around a simple rule:
 > **One output image = one complete redesign.**
 
 If you ask for eight redesigns, the intended result is **eight separate images**, never one contact sheet containing eight tiny concepts.
+
+## Quick install
+
+Install the full collection with [skills.sh](https://skills.sh):
+
+```bash
+npx skills add matteolaureti/ui-redesign-skills
+```
+
+Or install only the skill you need:
+
+```bash
+npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill ui-redesign-core
+npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill dashboard-redesign
+npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill landing-page-redesign
+npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill ios-app-redesign
+npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill component-redesign
+npx skills add https://github.com/matteolaureti/ui-redesign-skills --skill design-direction-explorer
+```
+
+See [INSTALL.md](INSTALL.md) for the recommended combinations.
 
 ## Why this exists
 
@@ -27,6 +50,7 @@ These skills turn screenshot redesign into a repeatable workflow with explicit p
 ```text
 ui-redesign-skills/
 ├── README.md
+├── INSTALL.md
 ├── LICENSE
 ├── CONTRIBUTING.md
 ├── docs/
@@ -186,13 +210,21 @@ For high-fidelity editing, explicitly tell the model what must remain recognizab
 
 ## Installation
 
-Use the `SKILL.md` file from the skill you want to install or provide it to a product that supports the Agent Skills format.
+Use the skills.sh CLI:
 
-A practical starting point is:
+```bash
+npx skills add matteolaureti/ui-redesign-skills
+```
 
-1. install or load `ui-redesign-core`;
-2. add one domain-specific skill;
-3. add `design-direction-explorer` only when you want several distinct concepts.
+The repository contains multiple valid skills, so you can install the collection or select a specific skill with `--skill`.
+
+To pull newer versions of installed skills:
+
+```bash
+npx skills update
+```
+
+Full installation details are in [INSTALL.md](INSTALL.md).
 
 ## Design philosophy
 
