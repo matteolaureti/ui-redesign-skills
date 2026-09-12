@@ -1,70 +1,71 @@
 # Skill architecture
 
-## Why several small skills?
+## Goal
 
-OpenAI's guidance describes skills as reusable workflows that can include a name, description, instructions and supporting resources. It also recommends smaller building blocks for complex workflows rather than one enormous end-to-end skill.
+Keep discovery cheap and precise, then load only the redesign guidance that changes the current task.
 
-This repository therefore separates:
+## Structure
 
-- universal redesign reasoning;
-- product-specific reasoning;
-- exploration behavior.
+```text
+skills/redesign-ui/
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+└── references/
+    ├── dashboard.md
+    ├── landing-page.md
+    ├── ios-app.md
+    ├── component.md
+    └── multiple-directions.md
+```
 
-## Layers
+## Why a single routed skill?
 
-### Layer 1 — Core
+GPT-6 Astra follows contextual instructions very closely. Current OpenAI guidance recommends short, precise skill descriptions and progressive disclosure for skills that support multiple workflows.
 
-`ui-redesign-core`
+A previous version of this repository exposed separate core, dashboard, landing-page, iOS, component, and direction-explorer skills. That required an agent to discover and combine overlapping skill descriptions.
 
-Contains universal screenshot-redesign behavior.
+The current architecture instead exposes one precise trigger: visual UI redesign from screenshots. After `redesign-ui` triggers, its root document acts as a small router.
 
-### Layer 2 — Domain
+This reduces:
 
-Examples:
+- competing descriptions in always-on discovery context;
+- duplicated rules;
+- accidental loading of irrelevant guidance;
+- dependence on the agent selecting several skills in the right combination.
 
-- `dashboard-redesign`
-- `landing-page-redesign`
-- `ios-app-redesign`
-- `component-redesign`
+## Progressive disclosure
 
-These answer a different question:
+`SKILL.md` contains only the invariants and routing logic needed for every redesign.
 
-> What does excellent redesign mean for this particular product surface?
+Domain-specific guidance lives one level deep in `references/` and is loaded conditionally:
 
-### Layer 3 — Exploration
+- dashboard/admin/analytics → `dashboard.md`;
+- landing/marketing → `landing-page.md`;
+- iOS/iPadOS → `ios-app.md`;
+- localized component → `component.md`;
+- multiple concepts → additionally `multiple-directions.md`.
 
-`design-direction-explorer`
+The agent should not bulk-load every reference.
 
-Controls diversity when several concepts are requested.
+## Degrees of freedom
 
-It does not replace the domain skill. It changes how the design space is explored.
+The skill constrains outcomes that matter — product meaning, output format, scope, and one-redesign-per-image — while leaving visual problem-solving relatively high freedom.
 
-## No fake dependency mechanism
+It intentionally avoids a long design recipe. Astra can infer many intermediate design decisions from the screenshot and user request.
 
-The repository does not invent an `import`, `extends`, or dependency syntax for `SKILL.md`.
+## User precedence
 
-Skills are written to be composable when a host supports multiple skills, but each specialized skill also carries its critical output guardrails so that it remains useful independently.
+The user's explicit instructions override skill guidance. The skill should not block or reinterpret a clear user request merely because a default heuristic differs.
 
-## Information hierarchy
+## Trigger boundary
 
-A redesign workflow should generally reason in this order:
+The skill is for generating visual redesign concepts from UI screenshots.
 
-1. product purpose;
-2. primary user task;
-3. required information/actions;
-4. information hierarchy;
-5. global composition;
-6. density;
-7. typography;
-8. component language;
-9. palette and surfaces;
-10. polish;
-11. final quality checks.
+It should not trigger for ordinary code implementation, pixel-perfect screenshot cloning, or unrelated image editing. This prevents a UI image-design skill from influencing normal coding tasks simply because they happen to involve frontend files.
 
 ## Output invariant
 
-The most important repository-wide invariant is:
+> **ONE OUTPUT IMAGE = ONE REDESIGN.**
 
-> ONE OUTPUT IMAGE = ONE REDESIGN.
-
-Multiple concepts are multiple outputs, not multiple miniature interfaces inside one canvas.
+Multiple concepts are multiple outputs unless the user explicitly requests a combined comparison format.
