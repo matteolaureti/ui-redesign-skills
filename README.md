@@ -1,6 +1,6 @@
 # UI Redesign Skills for GPT Image
 
-[![skills.sh](https://skills.sh/b/matteolaureti/ui-redesign-skills)](https://skills.sh/matteolaureti/ui-redesign-skills)
+[![skills.sh compatible](https://img.shields.io/badge/skills.sh-compatible-111111)](https://skills.sh)
 
 A composable set of Agent Skills for redesigning existing user interfaces from screenshots with GPT Image / ChatGPT Images.
 
