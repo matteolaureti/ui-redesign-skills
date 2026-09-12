@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Redesign"
+  short_description: "Redesign UI screenshots with image generation"
+  default_prompt: "Use $redesign-ui to redesign the attached UI screenshot as one production-quality image concept."
