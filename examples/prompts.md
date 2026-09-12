@@ -1,55 +1,35 @@
 # Example prompts
 
+The examples below assume the `redesign-ui` skill is installed.
+
 ## Dashboard — one redesign
 
-> Use the attached dashboard screenshot as the functional reference. Redesign the page completely while preserving its main information, actions and product identity. Improve hierarchy, spacing, density and component language. Generate one image containing one complete redesign only.
-
-Recommended:
-
-- `ui-redesign-core`
-- `dashboard-redesign`
+> Use $redesign-ui to completely redesign the attached dashboard. Preserve its product purpose, important information and functionality, but rethink the hierarchy, layout, navigation, density, typography and component structure. Generate one complete redesign image.
 
 ---
 
-## Dashboard — eight different directions
+## Dashboard — four different directions
 
-> Create 8 substantially different redesign directions for the attached dashboard. Each redesign must preserve the same core product purpose and important functionality. Generate each redesign as a separate full-size output image. Never combine multiple concepts into one image.
-
-Recommended:
-
-- `ui-redesign-core`
-- `dashboard-redesign`
-- `design-direction-explorer`
+> Use $redesign-ui to create 4 genuinely different redesign directions for the attached dashboard. Preserve the same product purpose and important functionality across all concepts, but vary the composition, hierarchy, navigation, density and component architecture. Generate 4 separate full-size output images, one redesign per image.
 
 ---
 
 ## Landing page
 
-> Completely redesign the attached landing page. Keep the product and brand recognizable, but rethink the narrative, hero, section structure, product presentation, social proof and conversion hierarchy. Avoid generic SaaS landing-page patterns.
-
-Recommended:
-
-- `ui-redesign-core`
-- `landing-page-redesign`
+> Use $redesign-ui to completely redesign the attached landing page. Keep the product and brand recognizable, but rethink the narrative, hero, product presentation, section rhythm, proof and conversion hierarchy. Avoid generic SaaS landing-page patterns. Generate one redesign image.
 
 ---
 
 ## iOS app
 
-> Redesign the attached iPhone screen as a polished native iOS experience. Preserve the task and important content, but rethink navigation, hierarchy and controls using native-feeling iOS patterns. Do not make it look like a mobile website.
-
-Recommended:
-
-- `ui-redesign-core`
-- `ios-app-redesign`
+> Use $redesign-ui to redesign the attached iPhone screen as a polished native-feeling iOS experience. Preserve the task and important content, but rethink navigation, hierarchy and controls where useful. Do not make it look like a mobile website. Generate one redesign image.
 
 ---
 
 ## Single component
 
-> Redesign only the card highlighted in the screenshot. Explore a substantially better information hierarchy and visual treatment, but do not redesign the rest of the page. Return one image with one redesigned component concept.
+> Use $redesign-ui to redesign only the highlighted component in the attached screenshot. Improve its information hierarchy, structure and visual treatment while keeping it compatible with the surrounding product. Do not redesign the entire page. Generate one component redesign image.
 
-Recommended:
+## Natural-language invocation
 
-- `ui-redesign-core`
-- `component-redesign`
+Explicit `$redesign-ui` invocation is useful for controlled tests, but the skill description is also designed for implicit discovery when a user clearly asks for a visual redesign image from a UI screenshot.
