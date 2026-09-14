@@ -2,7 +2,7 @@
 
 [![skills.sh compatible](https://img.shields.io/badge/skills.sh-compatible-111111)](https://skills.sh)
 
-A modular Agent Skill for redesigning existing user interfaces from screenshots with image generation. It is structured for current GPT-6 Astra / Codex skill guidance: one precise trigger, a lean `SKILL.md`, and domain-specific references loaded only when needed.
+A modular Agent Skill for redesigning existing user interfaces from screenshots with image generation. It uses one precise trigger, a lean router, a strong universal design brain, and domain-specific references loaded only when needed.
 
 > **One output image = one complete redesign.**
 
@@ -33,23 +33,33 @@ Screenshot-based UI redesign often fails in predictable ways:
 - mobile apps look like narrow websites;
 - requested alternatives reuse the same structure.
 
-`redesign-ui` gives the agent product-design guidance without forcing every task through a large universal prompt.
+`redesign-ui` gives the agent concrete product-design judgment without forcing every task through one enormous universal prompt.
 
-## Why one skill instead of several competing skills?
+## Architecture
 
-GPT-6 Astra is especially sensitive to instructions in skills and other files. OpenAI's current guidance recommends keeping skill descriptions precise and using progressive disclosure for skills with multiple workflows.
+The skill uses a two-stage guidance model.
 
-Instead of requiring the agent to discover and combine `core + category + explorer`, this repository exposes one clear skill trigger and routes internally to the relevant reference only after the skill is selected.
+### 1. Universal design brain
 
-For example:
+Every redesign loads:
 
-- dashboard screenshot → load `dashboard.md`;
-- landing page → load `landing-page.md`;
-- iPhone/iPad UI → load `ios-app.md`;
-- isolated component → load `component.md`;
-- multiple directions → additionally load `multiple-directions.md`.
+```text
+references/design-principles.md
+```
 
-Irrelevant references stay out of context.
+This contains the shared art direction for typography, hierarchy, layout, surfaces, components, realism, branding, accessibility, and anti-AI-slop review.
+
+### 2. Conditional domain guidance
+
+The router then loads only the references relevant to the task:
+
+- dashboard screenshot → `dashboard.md`;
+- landing page → `landing-page.md`;
+- iPhone/iPad UI → `ios-app.md`;
+- isolated component → `component.md`;
+- multiple directions → additionally `multiple-directions.md`.
+
+This preserves strong design guidance without filling context with unrelated domain instructions.
 
 ## Repository structure
 
@@ -71,6 +81,7 @@ ui-redesign-skills/
         ├── agents/
         │   └── openai.yaml
         └── references/
+            ├── design-principles.md
             ├── dashboard.md
             ├── landing-page.md
             ├── ios-app.md
@@ -80,7 +91,7 @@ ui-redesign-skills/
 
 ## What triggers the skill
 
-Use `redesign-ui` when the user wants a **visual redesign image** from one or more existing UI screenshots, including dashboards, web apps, landing pages, iOS screens, or individual components.
+Use `redesign-ui` when the task is a **visual redesign image** based on one or more existing UI screenshots, including dashboards, web apps, landing pages, iOS screens, or individual components.
 
 It is deliberately not intended for:
 
@@ -88,7 +99,7 @@ It is deliberately not intended for:
 - pixel-perfect screenshot cloning;
 - generic image editing unrelated to interface redesign.
 
-That narrow trigger helps prevent the skill from interfering with ordinary coding work in Codex.
+That narrow trigger helps prevent the image-design skill from interfering with ordinary frontend coding work.
 
 ## Example
 
@@ -96,7 +107,7 @@ Attach a dashboard screenshot and ask:
 
 > Use $redesign-ui to completely redesign this dashboard. Preserve its purpose and important functionality, but rethink the hierarchy, layout, navigation, density and component structure. Create 4 genuinely different directions as 4 separate output images.
 
-The router loads dashboard guidance plus the multiple-directions reference.
+The skill loads the universal design principles, dashboard guidance, and the multiple-directions reference.
 
 Expected output:
 
@@ -107,11 +118,11 @@ Image 3 → redesign C
 Image 4 → redesign D
 ```
 
-Never one image containing A + B + C + D unless the user explicitly requests a comparison board.
+Never one image containing A + B + C + D unless a comparison board is explicitly requested.
 
 ## Testing
 
-The repository includes a routing-focused test plan for the single-skill Astra architecture. It covers explicit invocation, implicit discovery, domain routing, multiple directions, component scope control, and a negative coding-trigger test.
+The repository includes a test plan covering explicit invocation, implicit discovery, domain routing, multiple directions, component scope control, and a negative coding-trigger test.
 
 See [docs/testing.md](docs/testing.md).
 
@@ -119,7 +130,9 @@ See [docs/testing.md](docs/testing.md).
 
 The skill does not prescribe one aesthetic. It prioritizes product purpose, important information and actions, hierarchy, layout, density, typography, component language, and then visual polish.
 
-It also leaves Astra room to make context-sensitive design decisions rather than forcing it through an elaborate step-by-step recipe.
+The universal design brain is intentionally opinionated about recurring generated-UI problems such as generic card grids, unnecessary pills, purple-blue AI gradients, decorative analytics, excessive glass, weak typography, and layouts that prioritize presentation over actual product use.
+
+At the same time, the router and domain references leave the model room to make context-sensitive design decisions rather than forcing every product through the same layout recipe.
 
 ## Contributing
 
