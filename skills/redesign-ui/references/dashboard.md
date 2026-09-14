@@ -39,6 +39,14 @@ Use charts only when they answer a real question. Do not invent decorative analy
 
 Align comparable numbers and data consistently.
 
+## Visual assets
+
+Do not assume a professional dashboard must be built only from cards, icons, charts, tables, and text.
+
+When the product has meaningful visual entities, consider using them as first-class interface content. Examples include content previews, media thumbnails, maps, product imagery, avatars, campaign creatives, device/location imagery, document previews, or other contextual assets.
+
+Use visual assets when they communicate real product information or strengthen hierarchy. Avoid generic stock imagery or decoration unrelated to the product.
+
 ## Avoid
 
 Avoid giant headings, excessive empty space, identical card grids, random charts, decorative bento layouts, dozens of colored badges, and landing-page styling inside an operational product.
