@@ -1,8 +1,8 @@
-# UI Redesign Skill for GPT Image
+# UI Screenshot Redesign Skill
 
 [![skills.sh compatible](https://img.shields.io/badge/skills.sh-compatible-111111)](https://skills.sh)
 
-A modular Agent Skill for redesigning existing user interfaces from screenshots with image generation. It uses one precise trigger, a lean router, a strong universal design brain, and domain-specific references loaded only when needed.
+A single, opinionated Agent Skill for redesigning existing web apps, dashboards, SaaS interfaces, landing pages, websites, mobile apps, and individual UI components from screenshots with image-generation models.
 
 > **One output image = one complete redesign.**
 
@@ -14,12 +14,16 @@ Install with skills.sh:
 npx skills add matteolaureti/ui-redesign-skills
 ```
 
-This installs the `redesign-ui` skill.
+The repository exposes one installable skill:
 
-To pull a newer version later:
+```text
+redesign-ui-from-screenshots
+```
+
+To update later:
 
 ```bash
-npx skills update
+npx skills update redesign-ui-from-screenshots
 ```
 
 ## Why this exists
@@ -31,36 +35,10 @@ Screenshot-based UI redesign often fails in predictable ways:
 - important functionality disappears for aesthetics;
 - dashboards become generic AI/Dribbble concepts;
 - mobile apps look like narrow websites;
-- requested alternatives reuse the same structure or visual style.
+- different requested alternatives reuse the same design language;
+- layouts change, but the product still looks visually too close to the source.
 
-`redesign-ui` gives the agent concrete product-design judgment without forcing every task through one enormous universal prompt.
-
-## Architecture
-
-The skill uses a layered guidance model.
-
-### 1. Universal design brain
-
-Every redesign loads:
-
-```text
-references/design-principles.md
-```
-
-This contains the shared art direction for typography, hierarchy, layout, surfaces, components, realism, branding, accessibility, and anti-AI-slop review.
-
-### 2. Conditional domain guidance
-
-The router then loads only the references relevant to the task:
-
-- dashboard screenshot → `dashboard.md`;
-- landing page → `landing-page.md`;
-- iPhone/iPad UI → `ios-app.md`;
-- isolated component → `component.md`;
-- strong visual rethink → `visual-directions.md`;
-- multiple directions → `multiple-directions.md` + `visual-directions.md`.
-
-This preserves strong design guidance without filling context with unrelated domain instructions.
+This skill keeps the redesign logic in **one monolithic `SKILL.md`** so the image model receives the complete design judgment in one place: product analysis, visual audit, layout, typography, surfaces, components, anti-AI-slop rules, dashboard guidance, landing-page guidance, multi-direction rules, image fidelity, brand handling, accessibility, and final quality checks.
 
 ## Repository structure
 
@@ -71,82 +49,66 @@ ui-redesign-skills/
 ├── LICENSE
 ├── CONTRIBUTING.md
 ├── docs/
-│   ├── architecture.md
-│   ├── references.md
-│   └── testing.md
+│   └── references.md
 ├── examples/
 │   └── prompts.md
 └── skills/
-    └── redesign-ui/
-        ├── SKILL.md
-        ├── agents/
-        │   └── openai.yaml
-        └── references/
-            ├── design-principles.md
-            ├── dashboard.md
-            ├── landing-page.md
-            ├── ios-app.md
-            ├── component.md
-            ├── visual-directions.md
-            └── multiple-directions.md
+    └── redesign-ui-from-screenshots/
+        └── SKILL.md
 ```
 
-## What triggers the skill
+## What the skill does
 
-Use `redesign-ui` when the task is a **visual redesign image** based on one or more existing UI screenshots, including dashboards, web apps, landing pages, iOS screens, or individual components.
+The screenshot is treated as a **functional, content, and product-context reference**, not as a layout that must be copied.
 
-It is deliberately not intended for:
+The skill can rethink:
 
-- implementing a UI in code;
-- pixel-perfect screenshot cloning;
-- generic image editing unrelated to interface redesign.
+- global composition;
+- navigation architecture;
+- hierarchy;
+- grid and alignment;
+- card structure;
+- spacing;
+- typography;
+- surface treatment;
+- density;
+- component presentation;
+- metrics, filters, tables and charts;
+- visual language and supporting imagery.
 
-That narrow trigger helps prevent the image-design skill from interfering with ordinary frontend coding work.
+At the same time, it preserves the product's purpose, important content, functionality, and recognizable identity unless the user explicitly asks for something more radical.
 
-## Example
+## Multiple redesigns
 
-Attach a dashboard screenshot and ask:
+When several concepts are requested, every concept must be generated as a **separate full-size output image**.
 
-> Use $redesign-ui to completely redesign this dashboard. Preserve its purpose and important functionality, but rethink the hierarchy, layout, navigation, density and component structure. Create 4 genuinely different directions as 4 separate output images.
-
-The skill loads the universal design principles, dashboard guidance, multiple-directions guidance, and visual-direction exploration.
-
-Expected output:
+For example, asking for 8 redesigns should produce:
 
 ```text
 Image 1 → redesign A
 Image 2 → redesign B
 Image 3 → redesign C
-Image 4 → redesign D
+...
+Image 8 → redesign H
 ```
 
-The directions should differ in both structure and art direction where appropriate — not merely rearrange the same palette, typography, surfaces, and visual mood.
+Never one image containing eight miniature concepts unless a comparison board is explicitly requested.
 
-Never one image containing A + B + C + D unless a comparison board is explicitly requested.
+## Example prompt
 
-## Testing
+Attach a dashboard screenshot and ask:
 
-The repository includes a test plan covering explicit invocation, implicit discovery, domain routing, multiple directions, component scope control, and a negative coding-trigger test.
-
-See [docs/testing.md](docs/testing.md).
+> Use $redesign-ui-from-screenshots to completely redesign this dashboard. Preserve its purpose and important functionality, but rethink the layout, hierarchy, navigation, typography, surfaces and visual language. Create 8 genuinely different redesigns as 8 separate full-size output images.
 
 ## Design philosophy
 
-The skill does not prescribe one aesthetic. It prioritizes product purpose, important information and actions, hierarchy, layout, density, typography, component language, and then visual polish.
+The skill is intentionally opinionated about recurring generated-UI problems: generic card grids, unnecessary pills, purple-blue AI gradients, excessive glass, weak typography, decorative analytics, fake futuristic styling, repeated layouts, and presentation-first concepts that do not feel like real software.
 
-The universal design brain is intentionally opinionated about recurring generated-UI problems such as generic card grids, unnecessary pills, purple-blue AI gradients, decorative analytics, excessive glass, weak typography, and layouts that prioritize presentation over actual product use.
-
-For strong or multi-direction redesigns, the skill also treats the current screenshot's palette, typography, surfaces, imagery strategy, and visual mood as redesignable implementation choices rather than automatic constraints. Brand identity can be preserved without cloning the current visual system.
-
-At the same time, the router and domain references leave the model room to make context-sensitive design decisions rather than forcing every product through the same layout recipe.
-
-## Contributing
-
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+The goal is not merely to make the screenshot prettier. The goal is to make the same product communicate more clearly and feel plausibly shippable by a strong product-design team.
 
 ## References
 
-The architecture follows current OpenAI skill guidance and GPT-6 Astra prompting guidance. See [docs/references.md](docs/references.md).
+See [docs/references.md](docs/references.md).
 
 ## License
 
