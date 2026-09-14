@@ -11,18 +11,22 @@ npx skills add matteolaureti/ui-redesign-skills
 The repository exposes one installable skill:
 
 ```text
-redesign-ui
+redesign-ui-from-screenshots
 ```
 
-That skill routes internally to the relevant dashboard, landing-page, iOS, component, or multi-direction guidance only when needed.
-
 ## Update
+
+```bash
+npx skills update redesign-ui-from-screenshots
+```
+
+You can also update all installed skills with:
 
 ```bash
 npx skills update
 ```
 
-New installations fetch the current repository contents.
+After updating, start a fresh agent/Codex session so the new skill contents are loaded.
 
 ## Output invariant
 
@@ -30,4 +34,4 @@ The installed skill follows this rule:
 
 > **One output image = one complete redesign.**
 
-If several redesign directions are requested, each direction should be generated as a separate full-size output image unless the user explicitly asks for a contact sheet or comparison board.
+If several redesign directions are requested, each direction should be generated as a separate full-size output image unless the user explicitly asks for a combined comparison format.
