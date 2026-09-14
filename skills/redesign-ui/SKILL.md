@@ -17,7 +17,8 @@ Then read only the additional domain references needed for the task:
 - Marketing site or landing page: `references/landing-page.md`.
 - iPhone or iPad application: `references/ios-app.md`.
 - One localized card, table, modal, FAQ, pricing block, panel, or section: `references/component.md`.
-- Multiple redesign directions or variants: also `references/multiple-directions.md`.
+- Strong visual rethink or complete redesign: also read `references/visual-directions.md`.
+- Multiple redesign directions or variants: also read `references/multiple-directions.md` and `references/visual-directions.md`.
 
 Do not load irrelevant domain references.
 
